@@ -125,9 +125,9 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
         <div class="op-name">André</div><div class="op-sub">Operador</div>
         <div class="op-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
       </button>
-      <button class="op" onclick="selOp('Duda')" id="op-Duda">
-        <div class="op-avatar" style="background:#FBEAF0;color:#993556">DU</div>
-        <div class="op-name">Duda</div><div class="op-sub">Operadora</div>
+      <button class="op" onclick="selOp('Matheus')" id="op-Matheus">
+        <div class="op-avatar" style="background:#E6F1FB;color:#185FA5">MA</div>
+        <div class="op-name">Matheus</div><div class="op-sub">Operador</div>
         <div class="op-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
       </button>
     </div>
@@ -168,7 +168,7 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
         <div class="fg" style="grid-column:1/-1"><label class="lbl">Operador</label>
           <select id="filtOp">
             <option value="">Todos os operadores</option>
-            <option>Felipe</option><option>Hudson</option><option>André</option><option>Duda</option>
+            <option>Felipe</option><option>Hudson</option><option>André</option><option>Matheus</option>
           </select>
         </div>
       </div>
@@ -191,7 +191,7 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
 const FB = 'https://montagem-ed7de-default-rtdb.firebaseio.com';
-let op = null, registros = [], rptFiltrados = [], pollTimer = null;
+let op = null, registros = [], rptFiltrados = [];
 
 const hoje = new Date().toISOString().split('T')[0];
 const inicioSemana = (()=>{const d=new Date();d.setDate(d.getDate()-d.getDay());return d.toISOString().split('T')[0]})();
@@ -204,83 +204,75 @@ function tick(){
 }
 tick(); setInterval(tick,1000);
 
-function setStatus(estado, txt){
-  const dot = document.getElementById('statusDot');
-  dot.className = 'status-dot' + (estado==='on'?' on': estado==='err'?' err':'');
-  document.getElementById('statusTxt').textContent = txt;
+function setStatus(estado,txt){
+  const dot=document.getElementById('statusDot');
+  dot.className='status-dot'+(estado==='on'?' on':estado==='err'?' err':'');
+  document.getElementById('statusTxt').textContent=txt;
 }
 
 async function buscarTodos(){
   try{
-    const r = await fetch(`${FB}/montagem.json`);
+    const r=await fetch(`${FB}/montagem.json`);
     if(!r.ok) throw new Error();
-    const data = await r.json();
-    registros = data
-      ? Object.entries(data).map(([id,v])=>({...v, fireId:id})).sort((a,b)=>b.ts.localeCompare(a.ts))
+    const data=await r.json();
+    registros=data
+      ? Object.entries(data).map(([id,v])=>({...v,fireId:id})).sort((a,b)=>b.ts.localeCompare(a.ts))
       : [];
     setStatus('on','Conectado — ao vivo');
-    renderLista();
-    atualizaStats();
-  } catch(e){
+    renderLista(); atualizaStats();
+  }catch(e){
     setStatus('err','Sem conexão');
   }
 }
 
-function iniciarPolling(){
-  buscarTodos();
-  pollTimer = setInterval(buscarTodos, 3000);
-}
-
-iniciarPolling();
+buscarTodos();
+setInterval(buscarTodos,3000);
 
 function goTab(t){
-  document.getElementById('tab-reg').style.display = t==='reg' ? '' : 'none';
-  document.getElementById('tab-rpt').style.display = t==='rpt' ? '' : 'none';
+  document.getElementById('tab-reg').style.display=t==='reg'?'':'none';
+  document.getElementById('tab-rpt').style.display=t==='rpt'?'':'none';
   document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',(t==='reg'&&i===0)||(t==='rpt'&&i===1)));
 }
 
 function selOp(nome){
-  op = nome;
+  op=nome;
   document.querySelectorAll('.op').forEach(b=>b.classList.remove('sel'));
   document.getElementById('op-'+nome).classList.add('sel');
   document.getElementById('scan').focus();
 }
 
-document.getElementById('scan').addEventListener('keydown', e=>{ if(e.key==='Enter') registrar(); });
+document.getElementById('scan').addEventListener('keydown',e=>{if(e.key==='Enter')registrar();});
 
-function flash(msg, tipo, icone){
-  const el = document.getElementById('flash');
-  el.innerHTML = `<span style="font-size:20px">${icone}</span><span>${msg}</span>`;
-  el.className = 'flash ' + tipo;
-  clearTimeout(el._t);
-  el._t = setTimeout(()=>el.className='flash', 3000);
+function flash(msg,tipo,icone){
+  const el=document.getElementById('flash');
+  el.innerHTML=`<span style="font-size:20px">${icone}</span><span>${msg}</span>`;
+  el.className='flash '+tipo;
+  clearTimeout(el._t); el._t=setTimeout(()=>el.className='flash',3000);
 }
 
-function fmtDt(iso){ const[y,m,d]=iso.split('T')[0].split('-'); return`${d}/${m}/${y}`; }
-function fmtHr(iso){ const d=new Date(iso),p=v=>String(v).padStart(2,'0'); return`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`; }
+function fmtDt(iso){const[y,m,d]=iso.split('T')[0].split('-');return`${d}/${m}/${y}`;}
+function fmtHr(iso){const d=new Date(iso),p=v=>String(v).padStart(2,'0');return`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;}
 
 async function registrar(){
-  const codigo = document.getElementById('scan').value.trim();
-  if(!op){ flash('Selecione seu nome antes de registrar!','err','⚠️'); return; }
-  if(!codigo){ flash('Digite ou bipe o código do pedido.','err','⚠️'); return; }
-  const btn = document.getElementById('btnReg');
-  btn.disabled = true;
+  const codigo=document.getElementById('scan').value.trim();
+  if(!op){flash('Selecione seu nome antes de registrar!','err','⚠️');return;}
+  if(!codigo){flash('Digite ou bipe o código do pedido.','err','⚠️');return;}
+  const btn=document.getElementById('btnReg');
+  btn.disabled=true;
   try{
-    const r = await fetch(`${FB}/montagem.json`,{
+    const r=await fetch(`${FB}/montagem.json`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({pedido:codigo, operador:op, ts:new Date().toISOString(), setor:'Montagem'})
+      body:JSON.stringify({pedido:codigo,operador:op,ts:new Date().toISOString(),setor:'Montagem'})
     });
     if(!r.ok) throw new Error();
-    document.getElementById('scan').value = '';
+    document.getElementById('scan').value='';
     document.getElementById('scan').focus();
     flash(`Pedido ${codigo} registrado com sucesso!`,'ok','✅');
     await buscarTodos();
-  } catch(e){
+  }catch(e){
     flash('Erro ao salvar. Verifique a conexão.','err','❌');
-  } finally{
-    btn.disabled = false;
-  }
+  }finally{btn.disabled=false;}
 }
 
 async function remover(fireId){
@@ -288,27 +280,27 @@ async function remover(fireId){
   try{
     await fetch(`${FB}/montagem/${fireId}.json`,{method:'DELETE'});
     await buscarTodos();
-  } catch(e){ flash('Erro ao remover.','err','❌'); }
+  }catch(e){flash('Erro ao remover.','err','❌');}
 }
 
 function atualizaStats(){
-  document.getElementById('tot').textContent = registros.filter(r=>r.ts.startsWith(hoje)).length;
-  document.getElementById('totSem').textContent = registros.filter(r=>r.ts.split('T')[0]>=inicioSemana).length;
-  document.getElementById('totGeral').textContent = registros.length;
-  document.getElementById('badge').textContent = registros.length;
+  document.getElementById('tot').textContent=registros.filter(r=>r.ts.startsWith(hoje)).length;
+  document.getElementById('totSem').textContent=registros.filter(r=>r.ts.split('T')[0]>=inicioSemana).length;
+  document.getElementById('totGeral').textContent=registros.length;
+  document.getElementById('badge').textContent=registros.length;
 }
 
-const cores   = {Felipe:'#534AB7',Hudson:'#0F6E56',André:'#854F0B',Duda:'#993556'};
-const bgCores = {Felipe:'#EEEDFE',Hudson:'#E1F5EE',André:'#FAEEDA',Duda:'#FBEAF0'};
-const iniciais= {Felipe:'FE',Hudson:'HU',André:'AN',Duda:'DU'};
+const cores   ={Felipe:'#534AB7',Hudson:'#0F6E56',André:'#854F0B',Matheus:'#185FA5'};
+const bgCores ={Felipe:'#EEEDFE',Hudson:'#E1F5EE',André:'#FAEEDA',Matheus:'#E6F1FB'};
+const iniciais={Felipe:'FE',Hudson:'HU',André:'AN',Matheus:'MA'};
 
 function renderLista(){
-  const lista = document.getElementById('lista');
+  const lista=document.getElementById('lista');
   if(!registros.length){
     lista.innerHTML='<div class="empty"><strong>Nenhum registro ainda</strong>Selecione seu nome, bipe o pedido e toque em "Registrar serviço".</div>';
     return;
   }
-  lista.innerHTML = registros.slice(0,60).map(r=>`
+  lista.innerHTML=registros.slice(0,60).map(r=>`
     <div class="item">
       <div class="item-avatar" style="background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'}">${iniciais[r.operador]||'??'}</div>
       <div class="item-info">
@@ -321,13 +313,13 @@ function renderLista(){
 }
 
 function buscar(){
-  const ini=document.getElementById('dtIni').value, fim=document.getElementById('dtFim').value, fop=document.getElementById('filtOp').value;
+  const ini=document.getElementById('dtIni').value,fim=document.getElementById('dtFim').value,fop=document.getElementById('filtOp').value;
   if(!ini||!fim) return;
-  rptFiltrados = registros.filter(r=>{ const d=r.ts.split('T')[0]; return d>=ini&&d<=fim&&(!fop||r.operador===fop); });
-  document.getElementById('btnPdf').disabled = rptFiltrados.length===0;
-  const res = document.getElementById('rpt-res');
-  if(!rptFiltrados.length){ res.innerHTML='<div class="empty"><strong>Nenhum resultado</strong>Tente outro período ou operador.</div>'; return; }
-  res.innerHTML = `<div class="rpt-count">${rptFiltrados.length} registro(s) encontrado(s)</div>` +
+  rptFiltrados=registros.filter(r=>{const d=r.ts.split('T')[0];return d>=ini&&d<=fim&&(!fop||r.operador===fop);});
+  document.getElementById('btnPdf').disabled=rptFiltrados.length===0;
+  const res=document.getElementById('rpt-res');
+  if(!rptFiltrados.length){res.innerHTML='<div class="empty"><strong>Nenhum resultado</strong>Tente outro período ou operador.</div>';return;}
+  res.innerHTML=`<div class="rpt-count">${rptFiltrados.length} registro(s) encontrado(s)</div>`+
     rptFiltrados.map(r=>`
       <div class="rpt-item">
         <div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${iniciais[r.operador]||'??'}</div>
@@ -340,15 +332,15 @@ function buscar(){
 function gerarPdf(){
   const{jsPDF}=window.jspdf;
   const doc=new jsPDF();
-  const ini=document.getElementById('dtIni').value, fim=document.getElementById('dtFim').value, fop=document.getElementById('filtOp').value||'Todos';
-  doc.setFont('helvetica','bold'); doc.setFontSize(14);
+  const ini=document.getElementById('dtIni').value,fim=document.getElementById('dtFim').value,fop=document.getElementById('filtOp').value||'Todos';
+  doc.setFont('helvetica','bold');doc.setFontSize(14);
   doc.text('Relatório de Serviços — Montagem',14,18);
-  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(120);
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(120);
   doc.text(`Período: ${fmtDt(ini+'T00:00:00')} a ${fmtDt(fim+'T00:00:00')}   |   Operador: ${fop}   |   Total: ${rptFiltrados.length} registros`,14,25);
   doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`,14,30);
-  doc.setDrawColor(200); doc.line(14,33,196,33);
+  doc.setDrawColor(200);doc.line(14,33,196,33);
   doc.autoTable({
-    startY:37, head:[['#','Pedido','Operador','Data','Hora']],
+    startY:37,head:[['#','Pedido','Operador','Data','Hora']],
     body:rptFiltrados.map((r,i)=>[i+1,r.pedido,r.operador,fmtDt(r.ts),fmtHr(r.ts)]),
     styles:{font:'helvetica',fontSize:9,cellPadding:3},
     headStyles:{fillColor:[24,95,165],textColor:255,fontStyle:'bold'},
@@ -359,10 +351,10 @@ function gerarPdf(){
   const porOp={};
   rptFiltrados.forEach(r=>{porOp[r.operador]=(porOp[r.operador]||0)+1;});
   const y=doc.lastAutoTable.finalY+10;
-  doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(0);
+  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(0);
   doc.text('Resumo por operador',14,y);
   doc.autoTable({
-    startY:y+4, head:[['Operador','Registros']], body:Object.entries(porOp),
+    startY:y+4,head:[['Operador','Registros']],body:Object.entries(porOp),
     styles:{font:'helvetica',fontSize:9,cellPadding:3},
     headStyles:{fillColor:[55,138,221],textColor:255,fontStyle:'bold'},
     columnStyles:{0:{cellWidth:60},1:{cellWidth:30,halign:'center'}},
