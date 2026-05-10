@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Controle — Montagem</title>
+<title>Controle — Montagem & Coloração</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=DM+Mono:wght@600&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 html{font-size:18px}
 body{font-family:'DM Sans',sans-serif;background:#f5f5f5;min-height:100vh}
 .app{padding:16px;max-width:780px;margin:0 auto;width:100%}
-.hdr{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid #e0e0e0;margin-bottom:20px;background:#fff;padding:16px;border-radius:16px;margin-bottom:16px}
+.hdr{display:flex;align-items:center;gap:12px;padding:16px;background:#fff;border-radius:16px;margin-bottom:16px}
 .hdr-icon{width:48px;height:48px;background:#E6F1FB;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hdr h1{font-size:18px;font-weight:700;color:#111;line-height:1.2}
 .hdr-meta{display:flex;align-items:center;gap:8px;margin-top:3px;flex-wrap:wrap}
@@ -33,6 +33,29 @@ body{font-family:'DM Sans',sans-serif;background:#f5f5f5;min-height:100vh}
 .op.sel .op-name{color:#0C447C}
 .op-check{display:none;width:24px;height:24px;border-radius:50%;background:#378ADD;margin:8px auto 0;align-items:center;justify-content:center}
 .op.sel .op-check{display:flex}
+
+/* SETOR TOGGLE */
+.setor-box{background:#fff;border:1.5px solid #ddd;border-radius:16px;padding:16px;margin-bottom:20px}
+.setor-title{font-size:14px;font-weight:700;color:#111;margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em}
+.setor-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.setor-btn{padding:14px 10px;border:2.5px solid #ddd;border-radius:14px;background:#f9f9f9;cursor:pointer;text-align:center;transition:all .2s;font-family:'DM Sans',sans-serif;-webkit-tap-highlight-color:transparent}
+.setor-btn:active{transform:scale(.97)}
+.setor-btn.sel-mont{border-color:#378ADD;background:#E6F1FB;color:#0C447C}
+.setor-btn.sel-cor{border-color:#8A3FBB;background:#F5EDFB;color:#5C1F8A}
+.setor-btn .s-icon{font-size:28px;display:block;margin-bottom:6px}
+.setor-btn .s-name{font-size:16px;font-weight:700}
+.setor-btn .s-sub{font-size:12px;color:#888;margin-top:2px}
+.setor-btn.sel-mont .s-sub,.setor-btn.sel-cor .s-sub{color:inherit;opacity:.7}
+/* checkbox coloração junto */
+.col-junto-box{margin-top:12px}
+.col-junto-toggle{display:flex;align-items:center;gap:10px;padding:14px;background:#F5EDFB;border:2px solid #C49AE0;border-radius:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .2s}
+.col-junto-toggle.ativo{background:#EDD9F8;border-color:#8A3FBB}
+.col-junto-toggle input[type=checkbox]{display:none}
+.custom-check{width:26px;height:26px;border-radius:8px;border:2.5px solid #C49AE0;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.col-junto-toggle.ativo .custom-check{background:#8A3FBB;border-color:#8A3FBB}
+.col-junto-lbl{font-size:15px;font-weight:700;color:#5C1F8A;line-height:1.3}
+.col-junto-lbl small{display:block;font-size:12px;color:#8A3FBB;font-weight:400;margin-top:1px}
+
 .scan-box{background:#f9f9f9;border:1.5px solid #ddd;border-radius:16px;padding:16px;margin-bottom:20px}
 .scan-title{font-size:16px;font-weight:700;color:#111;margin-bottom:4px}
 .scan-sub{font-size:13px;color:#666;margin-bottom:12px;line-height:1.5}
@@ -42,23 +65,42 @@ body{font-family:'DM Sans',sans-serif;background:#f5f5f5;min-height:100vh}
 .btn-reg{width:100%;padding:18px;font-size:18px;font-weight:700;background:#185FA5;color:#fff;border:none;border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:10px;-webkit-tap-highlight-color:transparent}
 .btn-reg:active{background:#0C447C;transform:scale(.98)}
 .btn-reg:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-reg.modo-cor{background:#6B26A3}
+.btn-reg.modo-cor:active{background:#4A1572}
+.btn-reg.modo-ambos{background:linear-gradient(90deg,#185FA5 50%,#6B26A3 50%)}
 .flash{padding:14px 16px;border-radius:12px;font-size:16px;font-weight:600;margin-bottom:16px;display:none;line-height:1.4;align-items:center;gap:10px}
 .flash.ok{background:#EAF3DE;color:#27500A;border:1.5px solid #639922;display:flex}
 .flash.err{background:#FCEBEB;color:#791F1F;border:1.5px solid #E24B4A;display:flex}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:24px}
+
+/* STATS com coloração */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:16px}
 .stat{background:#f0f0f0;border-radius:12px;padding:14px 10px;text-align:center}
 .stat-n{font-size:32px;font-weight:700;color:#111;line-height:1}
 .stat-l{font-size:12px;font-weight:600;color:#666;margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
+.stats-setores{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px}
+.stat-setor{border-radius:12px;padding:14px 10px;text-align:center}
+.stat-setor.mont{background:#E6F1FB;border:1.5px solid #B5D4F4}
+.stat-setor.cor{background:#F5EDFB;border:1.5px solid #D4AEED}
+.stat-setor .stat-n{font-size:26px}
+.stat-setor.mont .stat-n{color:#185FA5}
+.stat-setor.cor .stat-n{color:#6B26A3}
+.stat-setor .stat-l{color:#555}
+
 .list-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .list-title{font-size:14px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.06em}
 .badge{font-size:13px;font-weight:600;background:#eee;color:#666;padding:4px 12px;border-radius:99px;border:1px solid #ddd}
 .item{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border:1.5px solid #eee;border-radius:14px;margin-bottom:8px;animation:fadeIn .3s ease}
+.item.item-cor{border-left:4px solid #8A3FBB}
+.item.item-mont{border-left:4px solid #378ADD}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .item-avatar{width:44px;height:44px;min-width:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
 .item-info{flex:1;min-width:0}
 .item-ped{font-family:'DM Mono',monospace;font-size:17px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .item-nome{font-size:14px;font-weight:600;color:#555;margin-top:2px}
 .item-dt{font-size:12px;color:#888;margin-top:2px}
+.setor-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:middle;letter-spacing:.03em}
+.setor-tag.mont{background:#E6F1FB;color:#185FA5}
+.setor-tag.cor{background:#F5EDFB;color:#6B26A3}
 .item-del{background:#f5f5f5;border:1px solid #ddd;cursor:pointer;color:#999;font-size:18px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
 .item-del:active{background:#FCEBEB;color:#A32D2D;border-color:#E24B4A}
 .empty{text-align:center;color:#999;font-size:15px;padding:32px 16px;border:2px dashed #ddd;border-radius:14px;line-height:1.6}
@@ -66,6 +108,8 @@ body{font-family:'DM Sans',sans-serif;background:#f5f5f5;min-height:100vh}
 .loading{text-align:center;padding:32px;color:#999;font-size:15px}
 .spinner{width:32px;height:32px;border:3px solid #eee;border-top-color:#378ADD;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* RELATÓRIO */
 .rpt-panel{background:#f9f9f9;border:1.5px solid #ddd;border-radius:16px;padding:16px;margin-bottom:16px}
 .rpt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 .fg{display:flex;flex-direction:column;gap:6px}
@@ -79,8 +123,13 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
 .btn-pdf{background:#EAF3DE;color:#27500A;border:2px solid #639922}
 .btn-pdf:active{background:#C0DD97}
 .btn-pdf:disabled{opacity:.35;cursor:not-allowed}
+.rpt-section-title{font-size:15px;font-weight:700;padding:10px 14px;border-radius:10px;margin-bottom:10px;margin-top:16px;display:flex;align-items:center;gap:8px}
+.rpt-section-title.mont{background:#E6F1FB;color:#0C447C;border:1.5px solid #B5D4F4}
+.rpt-section-title.cor{background:#F5EDFB;color:#5C1F8A;border:1.5px solid #D4AEED}
 .rpt-count{font-size:14px;font-weight:600;color:#666;margin-bottom:10px;padding:10px 14px;background:#f0f0f0;border-radius:10px;text-align:center}
 .rpt-item{display:flex;align-items:center;gap:10px;padding:14px;background:#fff;border:1.5px solid #eee;border-radius:14px;margin-bottom:8px;flex-wrap:wrap}
+.rpt-item.rpt-cor{border-left:4px solid #8A3FBB}
+.rpt-item.rpt-mont{border-left:4px solid #378ADD}
 .rpt-ped{font-family:'DM Mono',monospace;font-size:16px;font-weight:600;color:#111;min-width:100px}
 .rpt-nome{font-size:15px;font-weight:600;color:#111;flex:1;min-width:80px}
 .rpt-dt{font-size:13px;color:#888;width:100%}
@@ -98,7 +147,7 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
       </svg>
     </div>
     <div style="flex:1;min-width:0">
-      <h1>Controle — Montagem</h1>
+      <h1>Controle — Montagem & Coloração</h1>
       <div class="hdr-meta">
         <div class="status-dot" id="statusDot"></div>
         <span class="status-txt" id="statusTxt">Conectando...</span>
@@ -112,6 +161,7 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
     <button class="tab" onclick="goTab('rpt')">📋 Relatório</button>
   </div>
 
+  <!-- ABA REGISTRAR -->
   <div id="tab-reg">
     <div class="sec-label">1. Quem está trabalhando?</div>
     <div class="ops">
@@ -142,7 +192,37 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
       </button>
     </div>
 
-    <div class="sec-label">2. Bipe o pedido e registre</div>
+    <div class="sec-label">2. O que foi feito neste pedido?</div>
+    <div class="setor-box">
+      <div class="setor-title">Selecione o serviço</div>
+      <div class="setor-row">
+        <button class="setor-btn" id="btn-mont" onclick="selSetor('Montagem')">
+          <span class="s-icon">🔧</span>
+          <div class="s-name">Montagem</div>
+          <div class="s-sub">Apenas montagem</div>
+        </button>
+        <button class="setor-btn" id="btn-cor" onclick="selSetor('Coloração')">
+          <span class="s-icon">🎨</span>
+          <div class="s-name">Coloração</div>
+          <div class="s-sub">Apenas coloração</div>
+        </button>
+      </div>
+      <!-- Opção de registrar coloração junto com montagem -->
+      <div class="col-junto-box" id="colJuntoBox" style="display:none">
+        <div class="col-junto-toggle" id="colJuntoToggle" onclick="toggleColJunto()">
+          <input type="checkbox" id="chkColJunto"/>
+          <div class="custom-check" id="customCheck">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="col-junto-lbl">
+            + Incluir coloração também
+            <small>Registra montagem E coloração no mesmo pedido</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label">3. Bipe o pedido e registre</div>
     <div class="scan-box">
       <div class="scan-title">Código do pedido</div>
       <div class="scan-sub">Aponte o leitor para o código de barras ou digite o número abaixo:</div>
@@ -161,6 +241,10 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
       <div class="stat"><div class="stat-n" id="totSem">0</div><div class="stat-l">Semana</div></div>
       <div class="stat"><div class="stat-n" id="totGeral">0</div><div class="stat-l">Total</div></div>
     </div>
+    <div class="stats-setores">
+      <div class="stat-setor mont"><div class="stat-n" id="totMont">0</div><div class="stat-l">🔧 Montagens hoje</div></div>
+      <div class="stat-setor cor"><div class="stat-n" id="totCor">0</div><div class="stat-l">🎨 Colorações hoje</div></div>
+    </div>
 
     <div class="list-hdr">
       <span class="list-title">Registros em tempo real</span>
@@ -169,16 +253,24 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
     <div id="lista"><div class="loading"><div class="spinner"></div>Carregando registros...</div></div>
   </div>
 
+  <!-- ABA RELATÓRIO -->
   <div id="tab-rpt" style="display:none">
     <div class="sec-label">Filtrar por período</div>
     <div class="rpt-panel">
       <div class="rpt-grid">
         <div class="fg"><label class="lbl">Data inicial</label><input type="date" id="dtIni" /></div>
         <div class="fg"><label class="lbl">Data final</label><input type="date" id="dtFim" /></div>
-        <div class="fg" style="grid-column:1/-1"><label class="lbl">Operador</label>
+        <div class="fg"><label class="lbl">Operador</label>
           <select id="filtOp">
             <option value="">Todos os operadores</option>
             <option>Felipe</option><option>Hudson</option><option>André</option><option>Matheus</option><option>Wendy</option>
+          </select>
+        </div>
+        <div class="fg"><label class="lbl">Setor</label>
+          <select id="filtSetor">
+            <option value="">Todos os setores</option>
+            <option value="Montagem">🔧 Montagem</option>
+            <option value="Coloração">🎨 Coloração</option>
           </select>
         </div>
       </div>
@@ -201,7 +293,7 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <script>
 const FB='https://montagem-ed7de-default-rtdb.firebaseio.com';
-let op=null,registros=[],rptFiltrados=[];
+let op=null, setor=null, colJunto=false, registros=[], rptFiltrados=[];
 const hoje=new Date().toISOString().split('T')[0];
 const inicioSemana=(()=>{const d=new Date();d.setDate(d.getDate()-d.getDay());return d.toISOString().split('T')[0]})();
 document.getElementById('dtIni').value=inicioSemana;
@@ -211,6 +303,44 @@ function tick(){const n=new Date(),p=v=>String(v).padStart(2,'0');document.getEl
 tick();setInterval(tick,1000);
 
 function setStatus(e,t){const d=document.getElementById('statusDot');d.className='status-dot'+(e==='on'?' on':e==='err'?' err':'');document.getElementById('statusTxt').textContent=t;}
+
+// SETOR SELECTION
+function selSetor(s){
+  setor=s;
+  document.getElementById('btn-mont').className='setor-btn'+(s==='Montagem'?' sel-mont':'');
+  document.getElementById('btn-cor').className='setor-btn'+(s==='Coloração'?' sel-cor':'');
+  // Mostrar opção de coloração junto apenas quando montagem selecionada
+  document.getElementById('colJuntoBox').style.display=s==='Montagem'?'block':'none';
+  if(s==='Coloração'){colJunto=false;atualizaToggle();}
+  atualizaBotao();
+}
+
+function toggleColJunto(){
+  colJunto=!colJunto;
+  atualizaToggle();
+  atualizaBotao();
+}
+
+function atualizaToggle(){
+  const tog=document.getElementById('colJuntoToggle');
+  const chk=document.getElementById('chkColJunto');
+  chk.checked=colJunto;
+  tog.className='col-junto-toggle'+(colJunto?' ativo':'');
+}
+
+function atualizaBotao(){
+  const btn=document.getElementById('btnReg');
+  btn.className='btn-reg';
+  if(setor==='Montagem'&&colJunto){
+    btn.className='btn-reg modo-ambos';
+    btn.innerHTML=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Registrar Montagem + Coloração`;
+  } else if(setor==='Coloração'){
+    btn.className='btn-reg modo-cor';
+    btn.innerHTML=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Registrar Coloração`;
+  } else {
+    btn.innerHTML=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Registrar serviço`;
+  }
+}
 
 async function buscarTodos(){
   try{
@@ -229,23 +359,35 @@ function goTab(t){
   document.getElementById('tab-rpt').style.display=t==='rpt'?'':'none';
   document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',(t==='reg'&&i===0)||(t==='rpt'&&i===1)));
 }
+
 function selOp(nome){op=nome;document.querySelectorAll('.op').forEach(b=>b.classList.remove('sel'));document.getElementById('op-'+nome).classList.add('sel');document.getElementById('scan').focus();}
 document.getElementById('scan').addEventListener('keydown',e=>{if(e.key==='Enter')registrar();});
 
-function flash(msg,tipo,icone){const el=document.getElementById('flash');el.innerHTML=`<span style="font-size:20px">${icone}</span><span>${msg}</span>`;el.className='flash '+tipo;clearTimeout(el._t);el._t=setTimeout(()=>el.className='flash',3000);}
+function flash(msg,tipo,icone){const el=document.getElementById('flash');el.innerHTML=`<span style="font-size:20px">${icone}</span><span>${msg}</span>`;el.className='flash '+tipo;clearTimeout(el._t);el._t=setTimeout(()=>el.className='flash',4000);}
 function fmtDt(iso){const[y,m,d]=iso.split('T')[0].split('-');return`${d}/${m}/${y}`;}
 function fmtHr(iso){const d=new Date(iso),p=v=>String(v).padStart(2,'0');return`${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;}
 
 async function registrar(){
   const codigo=document.getElementById('scan').value.trim();
   if(!op){flash('Selecione seu nome antes de registrar!','err','⚠️');return;}
+  if(!setor){flash('Selecione o serviço realizado (Montagem ou Coloração).','err','⚠️');return;}
   if(!codigo){flash('Digite ou bipe o código do pedido.','err','⚠️');return;}
   const btn=document.getElementById('btnReg');btn.disabled=true;
   try{
-    const r=await fetch(`${FB}/montagem.json`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pedido:codigo,operador:op,ts:new Date().toISOString(),setor:'Montagem'})});
-    if(!r.ok)throw new Error();
+    const ts=new Date().toISOString();
+    // Sempre registra o setor principal
+    await fetch(`${FB}/montagem.json`,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({pedido:codigo,operador:op,ts,setor})});
+    // Se marcou coloração junto com montagem, registra também como Coloração
+    if(setor==='Montagem'&&colJunto){
+      await fetch(`${FB}/montagem.json`,{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({pedido:codigo,operador:op,ts,setor:'Coloração'})});
+    }
     document.getElementById('scan').value='';document.getElementById('scan').focus();
-    flash(`Pedido ${codigo} registrado com sucesso!`,'ok','✅');
+    const msg=setor==='Montagem'&&colJunto
+      ? `Pedido ${codigo} registrado em Montagem e Coloração!`
+      : `Pedido ${codigo} registrado em ${setor}!`;
+    flash(msg,'ok','✅');
     await buscarTodos();
   }catch(e){flash('Erro ao salvar. Verifique a conexão.','err','❌');}
   finally{btn.disabled=false;}
@@ -258,10 +400,13 @@ async function remover(fireId){
 }
 
 function atualizaStats(){
-  document.getElementById('tot').textContent=registros.filter(r=>r.ts.startsWith(hoje)).length;
+  const regHoje=registros.filter(r=>r.ts.startsWith(hoje));
+  document.getElementById('tot').textContent=regHoje.length;
   document.getElementById('totSem').textContent=registros.filter(r=>r.ts.split('T')[0]>=inicioSemana).length;
   document.getElementById('totGeral').textContent=registros.length;
   document.getElementById('badge').textContent=registros.length;
+  document.getElementById('totMont').textContent=regHoje.filter(r=>r.setor==='Montagem'||!r.setor).length;
+  document.getElementById('totCor').textContent=regHoje.filter(r=>r.setor==='Coloração').length;
 }
 
 const cores={Felipe:'#534AB7',Hudson:'#0F6E56',André:'#854F0B',Matheus:'#185FA5',Wendy:'#993556'};
@@ -270,50 +415,130 @@ const iniciais={Felipe:'FE',Hudson:'HU',André:'AN',Matheus:'MA',Wendy:'WE'};
 
 function renderLista(){
   const lista=document.getElementById('lista');
-  if(!registros.length){lista.innerHTML='<div class="empty"><strong>Nenhum registro ainda</strong>Selecione seu nome, bipe o pedido e toque em "Registrar serviço".</div>';return;}
-  lista.innerHTML=registros.slice(0,60).map(r=>`
-    <div class="item">
+  if(!registros.length){lista.innerHTML='<div class="empty"><strong>Nenhum registro ainda</strong>Selecione seu nome, o serviço, bipe o pedido e toque em "Registrar serviço".</div>';return;}
+  lista.innerHTML=registros.slice(0,80).map(r=>{
+    const isCor=r.setor==='Coloração';
+    const tag=isCor?'<span class="setor-tag cor">🎨 Coloração</span>':'<span class="setor-tag mont">🔧 Montagem</span>';
+    return`<div class="item ${isCor?'item-cor':'item-mont'}">
       <div class="item-avatar" style="background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'}">${iniciais[r.operador]||'??'}</div>
       <div class="item-info">
-        <div class="item-ped">${r.pedido}</div>
+        <div class="item-ped">${r.pedido}${tag}</div>
         <div class="item-nome">${r.operador}</div>
         <div class="item-dt">${fmtDt(r.ts)} às ${fmtHr(r.ts)}</div>
       </div>
       <button class="item-del" onclick="remover('${r.fireId}')">✕</button>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function buscar(){
-  const ini=document.getElementById('dtIni').value,fim=document.getElementById('dtFim').value,fop=document.getElementById('filtOp').value;
+  const ini=document.getElementById('dtIni').value,fim=document.getElementById('dtFim').value;
+  const fop=document.getElementById('filtOp').value, fsetor=document.getElementById('filtSetor').value;
   if(!ini||!fim)return;
-  rptFiltrados=registros.filter(r=>{const d=r.ts.split('T')[0];return d>=ini&&d<=fim&&(!fop||r.operador===fop);});
+  rptFiltrados=registros.filter(r=>{
+    const d=r.ts.split('T')[0];
+    const setorReg=r.setor||'Montagem';
+    return d>=ini&&d<=fim&&(!fop||r.operador===fop)&&(!fsetor||setorReg===fsetor);
+  });
   document.getElementById('btnPdf').disabled=rptFiltrados.length===0;
   const res=document.getElementById('rpt-res');
-  if(!rptFiltrados.length){res.innerHTML='<div class="empty"><strong>Nenhum resultado</strong>Tente outro período ou operador.</div>';return;}
-  res.innerHTML=`<div class="rpt-count">${rptFiltrados.length} registro(s) encontrado(s)</div>`+
-    rptFiltrados.map(r=>`
-      <div class="rpt-item">
+  if(!rptFiltrados.length){res.innerHTML='<div class="empty"><strong>Nenhum resultado</strong>Tente outro período, operador ou setor.</div>';return;}
+
+  // Separar por setor para exibição
+  const montagens=rptFiltrados.filter(r=>(r.setor||'Montagem')==='Montagem');
+  const coloracoes=rptFiltrados.filter(r=>r.setor==='Coloração');
+
+  let html=`<div class="rpt-count">${rptFiltrados.length} registro(s) encontrado(s) — ${montagens.length} montagem(ns) · ${coloracoes.length} coloração(ões)</div>`;
+
+  if(montagens.length){
+    html+=`<div class="rpt-section-title mont">🔧 Montagem — ${montagens.length} registro(s)</div>`;
+    html+=montagens.map(r=>`
+      <div class="rpt-item rpt-mont">
         <div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${iniciais[r.operador]||'??'}</div>
         <span class="rpt-ped">${r.pedido}</span>
         <span class="rpt-nome">${r.operador}</span>
         <span class="rpt-dt">${fmtDt(r.ts)} às ${fmtHr(r.ts)}</span>
       </div>`).join('');
+  }
+
+  if(coloracoes.length){
+    html+=`<div class="rpt-section-title cor">🎨 Coloração — ${coloracoes.length} registro(s)</div>`;
+    html+=coloracoes.map(r=>`
+      <div class="rpt-item rpt-cor">
+        <div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${iniciais[r.operador]||'??'}</div>
+        <span class="rpt-ped">${r.pedido}</span>
+        <span class="rpt-nome">${r.operador}</span>
+        <span class="rpt-dt">${fmtDt(r.ts)} às ${fmtHr(r.ts)}</span>
+      </div>`).join('');
+  }
+
+  res.innerHTML=html;
 }
 
 function gerarPdf(){
   const{jsPDF}=window.jspdf;const doc=new jsPDF();
-  const ini=document.getElementById('dtIni').value,fim=document.getElementById('dtFim').value,fop=document.getElementById('filtOp').value||'Todos';
-  doc.setFont('helvetica','bold');doc.setFontSize(14);doc.text('Relatório de Serviços — Montagem',14,18);
+  const ini=document.getElementById('dtIni').value,fim=document.getElementById('dtFim').value;
+  const fop=document.getElementById('filtOp').value||'Todos';
+  const fsetor=document.getElementById('filtSetor').value||'Todos';
+  const montagens=rptFiltrados.filter(r=>(r.setor||'Montagem')==='Montagem');
+  const coloracoes=rptFiltrados.filter(r=>r.setor==='Coloração');
+
+  doc.setFont('helvetica','bold');doc.setFontSize(14);doc.text('Relatório de Serviços — Montagem & Coloração',14,18);
   doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(120);
-  doc.text(`Período: ${fmtDt(ini+'T00:00:00')} a ${fmtDt(fim+'T00:00:00')}   |   Operador: ${fop}   |   Total: ${rptFiltrados.length} registros`,14,25);
-  doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`,14,30);
-  doc.setDrawColor(200);doc.line(14,33,196,33);
-  doc.autoTable({startY:37,head:[['#','Pedido','Operador','Data','Hora']],body:rptFiltrados.map((r,i)=>[i+1,r.pedido,r.operador,fmtDt(r.ts),fmtHr(r.ts)]),styles:{font:'helvetica',fontSize:9,cellPadding:3},headStyles:{fillColor:[24,95,165],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[240,247,255]},columnStyles:{0:{cellWidth:10,halign:'center'},1:{cellWidth:45},2:{cellWidth:35},3:{cellWidth:30},4:{cellWidth:25}},margin:{left:14,right:14}});
-  const porOp={};rptFiltrados.forEach(r=>{porOp[r.operador]=(porOp[r.operador]||0)+1;});
-  const y=doc.lastAutoTable.finalY+10;
-  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(0);doc.text('Resumo por operador',14,y);
-  doc.autoTable({startY:y+4,head:[['Operador','Registros']],body:Object.entries(porOp),styles:{font:'helvetica',fontSize:9,cellPadding:3},headStyles:{fillColor:[55,138,221],textColor:255,fontStyle:'bold'},columnStyles:{0:{cellWidth:60},1:{cellWidth:30,halign:'center'}},margin:{left:14,right:14}});
-  doc.save(`montagem_${ini}_${fim}.pdf`);
+  doc.text(`Período: ${fmtDt(ini+'T00:00:00')} a ${fmtDt(fim+'T00:00:00')}   |   Operador: ${fop}   |   Setor: ${fsetor}`,14,25);
+  doc.text(`Total: ${rptFiltrados.length} registros (${montagens.length} montagens · ${coloracoes.length} colorações)`,14,30);
+  doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`,14,35);
+  doc.setDrawColor(200);doc.line(14,38,196,38);
+
+  let curY=42;
+
+  // TABELA MONTAGEM
+  if(montagens.length){
+    doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(24,95,165);
+    doc.text('Montagem',14,curY);curY+=5;
+    doc.autoTable({startY:curY,head:[['#','Pedido','Operador','Data','Hora']],
+      body:montagens.map((r,i)=>[i+1,r.pedido,r.operador,fmtDt(r.ts),fmtHr(r.ts)]),
+      styles:{font:'helvetica',fontSize:9,cellPadding:3},
+      headStyles:{fillColor:[24,95,165],textColor:255,fontStyle:'bold'},
+      alternateRowStyles:{fillColor:[230,241,251]},
+      columnStyles:{0:{cellWidth:10,halign:'center'},1:{cellWidth:45},2:{cellWidth:35},3:{cellWidth:30},4:{cellWidth:25}},
+      margin:{left:14,right:14}});
+    curY=doc.lastAutoTable.finalY+10;
+  }
+
+  // TABELA COLORAÇÃO
+  if(coloracoes.length){
+    if(curY>230){doc.addPage();curY=20;}
+    doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(107,38,163);
+    doc.text('Coloração',14,curY);curY+=5;
+    doc.autoTable({startY:curY,head:[['#','Pedido','Operador','Data','Hora']],
+      body:coloracoes.map((r,i)=>[i+1,r.pedido,r.operador,fmtDt(r.ts),fmtHr(r.ts)]),
+      styles:{font:'helvetica',fontSize:9,cellPadding:3},
+      headStyles:{fillColor:[107,38,163],textColor:255,fontStyle:'bold'},
+      alternateRowStyles:{fillColor:[245,237,251]},
+      columnStyles:{0:{cellWidth:10,halign:'center'},1:{cellWidth:45},2:{cellWidth:35},3:{cellWidth:30},4:{cellWidth:25}},
+      margin:{left:14,right:14}});
+    curY=doc.lastAutoTable.finalY+10;
+  }
+
+  // RESUMO POR OPERADOR
+  if(curY>240){doc.addPage();curY=20;}
+  const porOp={};rptFiltrados.forEach(r=>{
+    if(!porOp[r.operador])porOp[r.operador]={mont:0,cor:0};
+    if((r.setor||'Montagem')==='Montagem')porOp[r.operador].mont++;
+    else porOp[r.operador].cor++;
+  });
+  doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(0);
+  doc.text('Resumo por operador',14,curY);
+  doc.autoTable({startY:curY+4,
+    head:[['Operador','Montagens','Colorações','Total']],
+    body:Object.entries(porOp).map(([n,v])=>[n,v.mont,v.cor,v.mont+v.cor]),
+    styles:{font:'helvetica',fontSize:9,cellPadding:3},
+    headStyles:{fillColor:[55,138,221],textColor:255,fontStyle:'bold'},
+    columnStyles:{0:{cellWidth:55},1:{cellWidth:30,halign:'center'},2:{cellWidth:30,halign:'center'},3:{cellWidth:25,halign:'center'}},
+    margin:{left:14,right:14}});
+
+  doc.save(`servicos_${ini}_${fim}.pdf`);
 }
 </script>
 </body>
