@@ -55,7 +55,10 @@ body{font-family:'DM Sans',sans-serif;background:#f5f5f5;min-height:100vh}
 .scan-sub{font-size:13px;color:#666;margin-bottom:12px;line-height:1.5}
 .scan-input{width:100%;font-family:'DM Mono',monospace;font-size:22px;font-weight:600;padding:16px 14px;border:2px solid #ddd;border-radius:12px;background:#fff;color:#111;outline:none;transition:border-color .2s;letter-spacing:.05em;margin-bottom:10px}
 .scan-input:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,221,.15)}
+.scan-input.dup-warn{border-color:#E24B4A!important;box-shadow:0 0 0 3px rgba(226,75,74,.15)!important}
 .scan-input::placeholder{font-size:15px;font-weight:400;letter-spacing:0;opacity:.5}
+.dup-aviso{display:none;padding:12px 14px;border-radius:10px;font-size:14px;font-weight:600;background:#FCEBEB;color:#791F1F;border:1.5px solid #E24B4A;margin-bottom:10px;align-items:center;gap:8px;line-height:1.4}
+.dup-aviso.show{display:flex}
 .btn-reg{width:100%;padding:18px;font-size:18px;font-weight:700;background:#185FA5;color:#fff;border:none;border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:10px;-webkit-tap-highlight-color:transparent}
 .btn-reg:active{background:#0C447C;transform:scale(.98)}
 .btn-reg:disabled{opacity:.5;cursor:not-allowed;transform:none}
@@ -76,12 +79,33 @@ body{font-family:'DM Sans',sans-serif;background:#f5f5f5;min-height:100vh}
 .stat-setor.mont .stat-n{color:#185FA5}
 .stat-setor.cor .stat-n{color:#6B26A3}
 .stat-setor .stat-l{color:#555}
+
+/* ===== DUPLICIDADES ===== */
+.dup-section{margin-bottom:24px}
+.dup-header{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#FCEBEB;border:1.5px solid #E24B4A;border-radius:12px;margin-bottom:10px}
+.dup-header-icon{width:28px;height:28px;background:#E24B4A;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dup-header-txt{flex:1}
+.dup-header-title{font-size:14px;font-weight:700;color:#791F1F}
+.dup-header-sub{font-size:12px;color:#A32D2D;margin-top:1px}
+.dup-badge-count{font-size:12px;font-weight:700;background:#E24B4A;color:#fff;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.dup-group{background:#fff;border:2px solid #E24B4A;border-radius:14px;margin-bottom:10px;overflow:hidden}
+.dup-group-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#FCEBEB;border-bottom:1px solid #F7C1C1;flex-wrap:wrap}
+.dup-group-ped{font-family:'DM Mono',monospace;font-size:16px;font-weight:700;color:#791F1F}
+.dup-group-op{font-size:13px;font-weight:600;color:#A32D2D;flex:1}
+.dup-group-count{font-size:12px;font-weight:700;background:#E24B4A;color:#fff;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.dup-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:.5px solid #f5e5e5}
+.dup-item:last-child{border-bottom:none}
+.dup-item-n{font-size:12px;font-weight:700;color:#A32D2D;min-width:22px}
+.dup-item-dt{font-size:13px;color:#555;flex:1}
+.dup-item-del{background:#FCEBEB;border:1px solid #F7C1C1;cursor:pointer;color:#A32D2D;font-size:15px;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
 .list-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .list-title{font-size:14px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.06em}
 .badge{font-size:13px;font-weight:600;background:#eee;color:#666;padding:4px 12px;border-radius:99px;border:1px solid #ddd}
 .item{display:flex;align-items:center;gap:12px;padding:14px;background:#fff;border:1.5px solid #eee;border-radius:14px;margin-bottom:8px;animation:fadeIn .3s ease}
 .item.item-cor{border-left:4px solid #8A3FBB}
 .item.item-mont{border-left:4px solid #378ADD}
+.item.is-dup{border-color:#E24B4A!important;background:#fffafa}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .item-avatar{width:44px;height:44px;min-width:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
 .item-info{flex:1;min-width:0}
@@ -91,6 +115,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f5f5;min-height:100vh}
 .setor-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:middle;letter-spacing:.03em}
 .setor-tag.mont{background:#E6F1FB;color:#185FA5}
 .setor-tag.cor{background:#F5EDFB;color:#6B26A3}
+.dup-tag{font-size:11px;font-weight:700;background:#E24B4A;color:#fff;padding:2px 7px;border-radius:6px;margin-left:6px;vertical-align:middle}
 .item-del{background:#f5f5f5;border:1px solid #ddd;cursor:pointer;color:#999;font-size:18px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .item-del:active{background:#FCEBEB;color:#A32D2D;border-color:#E24B4A}
 .empty{text-align:center;color:#999;font-size:15px;padding:32px 16px;border:2px dashed #ddd;border-radius:14px;line-height:1.6}
@@ -119,9 +144,30 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
 .rpt-item{display:flex;align-items:center;gap:10px;padding:14px;background:#fff;border:1.5px solid #eee;border-radius:14px;margin-bottom:8px;flex-wrap:wrap}
 .rpt-item.rpt-cor{border-left:4px solid #8A3FBB}
 .rpt-item.rpt-mont{border-left:4px solid #378ADD}
+.rpt-item.is-dup{border-left:5px solid #E24B4A!important;background:#fffafa}
 .rpt-ped{font-family:'DM Mono',monospace;font-size:16px;font-weight:600;color:#111;min-width:100px}
+.rpt-item.is-dup .rpt-ped{color:#A32D2D}
 .rpt-nome{font-size:15px;font-weight:600;color:#111;flex:1;min-width:80px}
 .rpt-dt{font-size:13px;color:#888;width:100%}
+
+/* Resumo de duplicidades no relatório */
+.rpt-dup-resumo{margin-top:24px;border:2px solid #E24B4A;border-radius:16px;overflow:hidden}
+.rpt-dup-resumo-header{background:#FCEBEB;padding:14px 16px;border-bottom:1px solid #F7C1C1}
+.rpt-dup-resumo-title{font-size:15px;font-weight:700;color:#791F1F;display:flex;align-items:center;gap:8px}
+.rpt-dup-resumo-sub{font-size:12px;color:#A32D2D;margin-top:3px}
+.rpt-dup-body{padding:12px 16px}
+.rpt-dup-stats{display:grid;gap:10px;margin-bottom:14px}
+.rpt-dup-stat{background:#FCEBEB;border-radius:12px;padding:12px;text-align:center;border:1px solid #F7C1C1}
+.rpt-dup-stat-n{font-size:26px;font-weight:700;color:#A32D2D;line-height:1}
+.rpt-dup-stat-op{font-size:13px;font-weight:600;color:#791F1F;margin-top:3px}
+.rpt-dup-stat-l{font-size:11px;color:#A32D2D;margin-top:1px;text-transform:uppercase;letter-spacing:.04em}
+.rpt-dup-list-title{font-size:13px;font-weight:700;color:#791F1F;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;border-top:1px solid #F7C1C1;padding-top:12px}
+.rpt-dup-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff;border:1.5px solid #F7C1C1;border-left:4px solid #E24B4A;border-radius:10px;margin-bottom:6px;flex-wrap:wrap}
+.rpt-dup-row-ped{font-family:'DM Mono',monospace;font-size:15px;font-weight:700;color:#A32D2D;min-width:90px}
+.rpt-dup-row-op{font-size:13px;font-weight:600;color:#555;flex:1}
+.rpt-dup-row-qtd{font-size:12px;font-weight:700;background:#E24B4A;color:#fff;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.rpt-dup-row-dts{font-size:12px;color:#888;width:100%;margin-top:3px;line-height:1.6}
+.rpt-ok-box{margin-top:14px;padding:12px 14px;background:#EAF3DE;border:1.5px solid #639922;border-radius:12px;font-size:14px;font-weight:600;color:#27500A;display:flex;align-items:center;gap:8px}
 
 /* ====== ESTOQUE ====== */
 .est-admin-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#E6F1FB;border:1.5px solid #378ADD;border-radius:12px;margin-bottom:16px}
@@ -215,7 +261,6 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
 .modal-edit-field:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,221,.15)}
 .btn-salvar-edit{width:100%;padding:16px;font-size:17px;font-weight:700;background:#185FA5;color:#fff;border:none;border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:14px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-del-item{width:100%;padding:14px;font-size:15px;font-weight:600;background:#FCEBEB;color:#A32D2D;border:1.5px solid #E24B4A;border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:8px}
-/* login estoque */
 .est-input{width:100%;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;padding:14px 12px;border:2px solid #ddd;border-radius:12px;background:#fff;color:#111;outline:none;margin-bottom:10px}
 .est-input:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,221,.15)}
 .btn-entrar{width:100%;padding:16px;font-size:17px;font-weight:700;background:#185FA5;color:#fff;border:none;border-radius:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;margin-bottom:10px}
@@ -313,7 +358,11 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
     <div class="scan-box">
       <div class="scan-title">Código do pedido</div>
       <div class="scan-sub">Aponte o leitor para o código de barras ou digite o número abaixo:</div>
-      <input class="scan-input" id="scan" name="scan_mont_x7" placeholder="Ex: PD-00123" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" />
+      <input class="scan-input" id="scan" name="scan_mont_x7" placeholder="Ex: PD-00123" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="verificarDup()" />
+      <div class="dup-aviso" id="dupAviso">
+        <span style="font-size:20px;flex-shrink:0">⚠️</span>
+        <span id="dupAvisoTxt"></span>
+      </div>
       <button class="btn-reg" id="btnReg" onclick="registrar()">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         Registrar serviço
@@ -331,6 +380,21 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
     <div class="stats-setores">
       <div class="stat-setor mont"><div class="stat-n" id="totMont">0</div><div class="stat-l">🔧 Montagens hoje</div></div>
       <div class="stat-setor cor"><div class="stat-n" id="totCor">0</div><div class="stat-l">🎨 Colorações hoje</div></div>
+    </div>
+
+    <!-- Seção de duplicidades -->
+    <div id="dupSection" class="dup-section" style="display:none">
+      <div class="dup-header">
+        <div class="dup-header-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="dup-header-txt">
+          <div class="dup-header-title">Pedidos em duplicidade detectados</div>
+          <div class="dup-header-sub">Mesmo pedido registrado mais de uma vez pelo mesmo operador no mesmo setor</div>
+        </div>
+        <span class="dup-badge-count" id="dupBadgeCount">0</span>
+      </div>
+      <div id="dupLista"></div>
     </div>
 
     <div class="list-hdr">
@@ -377,7 +441,6 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
 
   <!-- ABA ESTOQUE -->
   <div id="tab-est" style="display:none">
-    <!-- Modal login admin -->
     <div id="est-login-area" style="display:none;background:#fff;border:1.5px solid #ddd;border-radius:16px;padding:24px;margin-bottom:16px">
       <div style="text-align:center;margin-bottom:16px">
         <div style="width:56px;height:56px;background:#E6F1FB;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:26px">🔐</div>
@@ -392,7 +455,6 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
     </div>
 
     <div id="est-conteudo">
-      <!-- Barra admin logado -->
       <div id="est-admin-bar" style="display:none" class="est-admin-bar">
         <div class="est-admin-info">
           <span class="est-admin-badge">Admin</span>
@@ -400,12 +462,10 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
         </div>
         <button class="btn-sair" onclick="sairAdmin()">Sair</button>
       </div>
-      <!-- Botão acesso admin (quando não logado) -->
       <div id="est-btn-login-bar" style="display:flex;justify-content:flex-end;margin-bottom:12px">
         <button onclick="abrirLogin()" style="padding:10px 16px;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C;border:1.5px solid #378ADD;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif">🔐 Admin</button>
       </div>
 
-      <!-- Painel adicionar item (só admin) -->
       <div id="est-add-panel" style="display:none" class="est-add-panel">
         <div class="est-add-title"><span style="font-size:20px">➕</span> Adicionar / repor item no estoque</div>
         <div class="est-form-row">
@@ -424,19 +484,16 @@ input[type=date]:focus,select:focus{border-color:#378ADD}
         <div class="flash" id="flashEst" style="margin-top:10px"></div>
       </div>
 
-      <!-- Sub-tabs estoque -->
       <div class="est-rpt-tabs">
         <button class="est-rpt-tab on" onclick="goEstTab('items')" id="estTab-items">📦 Itens</button>
         <button class="est-rpt-tab" onclick="goEstTab('mov')" id="estTab-mov">📋 Movimentações</button>
       </div>
 
-      <!-- Lista itens -->
       <div id="estTab-items-content">
         <div class="estoque-stats" id="est-stats-bar"></div>
         <div id="est-lista-items"><div class="loading"><div class="spinner"></div>Carregando estoque...</div></div>
       </div>
 
-      <!-- Movimentações -->
       <div id="estTab-mov-content" style="display:none">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
           <div>
@@ -547,13 +604,20 @@ async function buscarTodos(){
     const data=await r.json();
     registros=data?Object.entries(data).map(([id,v])=>({...v,fireId:id})).sort((a,b)=>b.ts.localeCompare(a.ts)):[];
     setStatus('on','Conectado — ao vivo');
-    renderLista();atualizaStats();
+    renderTudo();
+    atualizaStats();
   }catch(e){setStatus('err','Sem conexão');}
 }
 buscarTodos();setInterval(buscarTodos,3000);
 window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('scan').value='';},100);});
 
-function selOp(nome){op=nome;document.querySelectorAll('.op').forEach(b=>b.classList.remove('sel'));document.getElementById('op-'+nome).classList.add('sel');document.getElementById('scan').focus();}
+function selOp(nome){
+  op=nome;
+  document.querySelectorAll('.op').forEach(b=>b.classList.remove('sel'));
+  document.getElementById('op-'+nome).classList.add('sel');
+  document.getElementById('scan').focus();
+  verificarDup();
+}
 document.getElementById('scan').addEventListener('keydown',e=>{if(e.key==='Enter')registrar();});
 
 function selSetor(s){
@@ -563,14 +627,73 @@ function selSetor(s){
   document.getElementById('colJuntoBox').style.display=s==='Montagem'?'block':'none';
   if(s==='Coloração'){colJunto=false;atualizaToggle();}
   atualizaBotao();
+  verificarDup();
 }
-function toggleColJunto(){colJunto=!colJunto;atualizaToggle();atualizaBotao();}
+function toggleColJunto(){
+  colJunto=!colJunto;
+  atualizaToggle();
+  atualizaBotao();
+  verificarDup();
+}
 function atualizaToggle(){const tog=document.getElementById('colJuntoToggle');document.getElementById('chkColJunto').checked=colJunto;tog.className='col-junto-toggle'+(colJunto?' ativo':'');}
 function atualizaBotao(){
   const btn=document.getElementById('btnReg');
   if(setor==='Montagem'&&colJunto){btn.className='btn-reg modo-ambos';btn.innerHTML=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Registrar Montagem + Coloração`;}
   else if(setor==='Coloração'){btn.className='btn-reg modo-cor';btn.innerHTML=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Registrar Coloração`;}
   else{btn.className='btn-reg';btn.innerHTML=`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Registrar serviço`;}
+}
+
+// ========== DUPLICIDADE ==========
+// Chave de duplicidade: operador || pedido || setor
+// Registros antigos sem campo 'setor' são tratados como 'Montagem' (retrocompatível)
+function dupKey(r){
+  const s = r.setor || 'Montagem';
+  return `${r.operador}||${r.pedido}||${s}`;
+}
+
+function calcularDups(lista){
+  const mapa={};
+  lista.forEach(r=>{
+    const key=dupKey(r);
+    if(!mapa[key])mapa[key]=[];
+    mapa[key].push(r);
+  });
+  const dupKeys=new Set();
+  const grupos=[];
+  Object.entries(mapa).forEach(([key,itens])=>{
+    if(itens.length>1){
+      dupKeys.add(key);
+      const s=itens[0].setor||'Montagem';
+      grupos.push({key,operador:itens[0].operador,pedido:itens[0].pedido,setor:s,itens:itens.sort((a,b)=>a.ts.localeCompare(b.ts))});
+    }
+  });
+  return{dupKeys,grupos};
+}
+
+function verificarDup(){
+  const codigo=document.getElementById('scan').value.trim();
+  const input=document.getElementById('scan');
+  const aviso=document.getElementById('dupAviso');
+  if(!codigo||!op||!setor){
+    input.classList.remove('dup-warn');
+    aviso.classList.remove('show');
+    return;
+  }
+  // Para "Montagem + Coloração", verifica duplicidade em ambos os setores
+  const setoresVerificar = (setor==='Montagem'&&colJunto) ? ['Montagem','Coloração'] : [setor];
+  const msgs=[];
+  setoresVerificar.forEach(s=>{
+    const dups=registros.filter(r=>r.pedido===codigo&&r.operador===op&&(r.setor||'Montagem')===s);
+    if(dups.length>0) msgs.push(`${dups.length}x em ${s}`);
+  });
+  if(msgs.length>0){
+    input.classList.add('dup-warn');
+    aviso.classList.add('show');
+    document.getElementById('dupAvisoTxt').textContent=`Este pedido já foi registrado por ${op}: ${msgs.join(', ')}. Você pode registrar novamente se necessário.`;
+  }else{
+    input.classList.remove('dup-warn');
+    aviso.classList.remove('show');
+  }
 }
 
 function flash(msg,tipo,icone){const el=document.getElementById('flash');el.innerHTML=`<span style="font-size:20px">${icone}</span><span>${msg}</span>`;el.className='flash '+tipo;clearTimeout(el._t);el._t=setTimeout(()=>el.className='flash',4000);}
@@ -583,6 +706,19 @@ async function registrar(){
   if(!op){flash('Selecione seu nome antes de registrar!','err','⚠️');return;}
   if(!setor){flash('Selecione o serviço realizado (Montagem ou Coloração).','err','⚠️');return;}
   if(!codigo){flash('Digite ou bipe o código do pedido.','err','⚠️');return;}
+
+  // Verificar duplicidades antes de salvar
+  const setoresRegistrar = (setor==='Montagem'&&colJunto) ? ['Montagem','Coloração'] : [setor];
+  const dupsMsgs=[];
+  setoresRegistrar.forEach(s=>{
+    const dups=registros.filter(r=>r.pedido===codigo&&r.operador===op&&(r.setor||'Montagem')===s);
+    if(dups.length>0) dupsMsgs.push(`${dups.length}x em ${s}`);
+  });
+  if(dupsMsgs.length>0){
+    const ok=confirm(`⚠️ Atenção!\n\nEste pedido já foi registrado por ${op}: ${dupsMsgs.join(', ')}.\n\nDeseja registrar novamente mesmo assim?`);
+    if(!ok)return;
+  }
+
   const btn=document.getElementById('btnReg');btn.disabled=true;
   try{
     const ts=new Date().toISOString();
@@ -590,72 +726,191 @@ async function registrar(){
     if(setor==='Montagem'&&colJunto){
       await fetch(`${FB}/montagem.json`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pedido:codigo,operador:op,ts,setor:'Coloração'})});
     }
-    document.getElementById('scan').value='';document.getElementById('scan').focus();
+    document.getElementById('scan').value='';
+    document.getElementById('scan').classList.remove('dup-warn');
+    document.getElementById('dupAviso').classList.remove('show');
+    document.getElementById('scan').focus();
     flash(setor==='Montagem'&&colJunto?`Pedido ${codigo} registrado em Montagem e Coloração!`:`Pedido ${codigo} registrado em ${setor}!`,'ok','✅');
     await buscarTodos();
   }catch(e){flash('Erro ao salvar. Verifique a conexão.','err','❌');}
   finally{btn.disabled=false;}
 }
+
 async function remover(fireId){
   if(!confirm('Remover este registro?'))return;
   try{await fetch(`${FB}/montagem/${fireId}.json`,{method:'DELETE'});await buscarTodos();}
   catch(e){flash('Erro ao remover.','err','❌');}
 }
+
 function atualizaStats(){
   const regHoje=registros.filter(r=>r.ts.startsWith(hoje));
   document.getElementById('tot').textContent=regHoje.length;
   document.getElementById('totSem').textContent=registros.filter(r=>r.ts.split('T')[0]>=inicioSemana).length;
   document.getElementById('totGeral').textContent=registros.length;
   document.getElementById('badge').textContent=registros.length;
-  document.getElementById('totMont').textContent=regHoje.filter(r=>r.setor==='Montagem'||!r.setor).length;
+  document.getElementById('totMont').textContent=regHoje.filter(r=>(r.setor||'Montagem')==='Montagem').length;
   document.getElementById('totCor').textContent=regHoje.filter(r=>r.setor==='Coloração').length;
 }
-function renderLista(){
+
+function renderTudo(){
+  const{dupKeys,grupos}=calcularDups(registros);
+
+  // Seção de grupos duplicados
+  const dupSection=document.getElementById('dupSection');
+  if(grupos.length===0){
+    dupSection.style.display='none';
+  }else{
+    dupSection.style.display='';
+    document.getElementById('dupBadgeCount').textContent=grupos.length+' grupo'+(grupos.length>1?'s':'');
+    document.getElementById('dupLista').innerHTML=grupos.map(g=>{
+      const isCor=g.setor==='Coloração';
+      const setorBadge=isCor
+        ?`<span style="font-size:11px;font-weight:700;background:#F5EDFB;color:#6B26A3;padding:2px 8px;border-radius:99px;border:1px solid #D4AEED">🎨 Coloração</span>`
+        :`<span style="font-size:11px;font-weight:700;background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:99px;border:1px solid #B5D4F4">🔧 Montagem</span>`;
+      return`<div class="dup-group">
+        <div class="dup-group-header">
+          <div style="width:36px;height:36px;min-width:36px;border-radius:50%;background:${bgCores[g.operador]||'#eee'};color:${cores[g.operador]||'#333'};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">${iniciais[g.operador]||'??'}</div>
+          <span class="dup-group-ped">${g.pedido}</span>
+          ${setorBadge}
+          <span class="dup-group-op">${g.operador}</span>
+          <span class="dup-group-count">${g.itens.length}x registrado</span>
+        </div>
+        ${g.itens.map((item,i)=>`
+          <div class="dup-item">
+            <span class="dup-item-n">#${i+1}</span>
+            <span class="dup-item-dt">${fmtDt(item.ts)} às ${fmtHr(item.ts)}</span>
+            <button class="dup-item-del" onclick="remover('${item.fireId}')">✕</button>
+          </div>`).join('')}
+      </div>`;
+    }).join('');
+  }
+
+  // Lista principal
   const lista=document.getElementById('lista');
-  if(!registros.length){lista.innerHTML='<div class="empty"><strong>Nenhum registro ainda</strong>Selecione seu nome, o serviço, bipe o pedido e toque em "Registrar serviço".</div>';return;}
+  if(!registros.length){
+    lista.innerHTML='<div class="empty"><strong>Nenhum registro ainda</strong>Selecione seu nome, o serviço, bipe o pedido e toque em "Registrar serviço".</div>';
+    return;
+  }
   lista.innerHTML=registros.slice(0,80).map(r=>{
     const isCor=r.setor==='Coloração';
     const tag=isCor?'<span class="setor-tag cor">🎨 Coloração</span>':'<span class="setor-tag mont">🔧 Montagem</span>';
-    return`<div class="item ${isCor?'item-cor':'item-mont'}">
+    const isDup=dupKeys.has(dupKey(r));
+    return`<div class="item ${isCor?'item-cor':'item-mont'}${isDup?' is-dup':''}">
       <div class="item-avatar" style="background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'}">${iniciais[r.operador]||'??'}</div>
       <div class="item-info">
-        <div class="item-ped">${r.pedido}${tag}</div>
+        <div class="item-ped">${r.pedido}${tag}${isDup?'<span class="dup-tag">DUP</span>':''}</div>
         <div class="item-nome">${r.operador}</div>
         <div class="item-dt">${fmtDt(r.ts)} às ${fmtHr(r.ts)}</div>
       </div>
       <button class="item-del" onclick="remover('${r.fireId}')">✕</button>
     </div>`;
   }).join('');
+
+  verificarDup();
 }
+
+// Alias para compatibilidade
+function renderLista(){renderTudo();}
 
 // ========== RELATÓRIO ==========
 function buscar(){
   const ini=document.getElementById('dtIni').value,fim=document.getElementById('dtFim').value;
   const fop=document.getElementById('filtOp').value,fsetor=document.getElementById('filtSetor').value;
   if(!ini||!fim)return;
-  rptFiltrados=registros.filter(r=>{const d=r.ts.split('T')[0];const sr=r.setor||'Montagem';return d>=ini&&d<=fim&&(!fop||r.operador===fop)&&(!fsetor||sr===fsetor);});
+  rptFiltrados=registros.filter(r=>{
+    const d=r.ts.split('T')[0];
+    const sr=r.setor||'Montagem';
+    return d>=ini&&d<=fim&&(!fop||r.operador===fop)&&(!fsetor||sr===fsetor);
+  });
   document.getElementById('btnPdf').disabled=rptFiltrados.length===0;
   const res=document.getElementById('rpt-res');
   if(!rptFiltrados.length){res.innerHTML='<div class="empty"><strong>Nenhum resultado</strong>Tente outro período, operador ou setor.</div>';return;}
+
+  const{dupKeys,grupos}=calcularDups(rptFiltrados);
+  const dupPorOp={};
+  grupos.forEach(g=>{
+    if(!dupPorOp[g.operador])dupPorOp[g.operador]=0;
+    dupPorOp[g.operador]+=(g.itens.length-1);
+  });
+
   const montagens=rptFiltrados.filter(r=>(r.setor||'Montagem')==='Montagem');
   const coloracoes=rptFiltrados.filter(r=>r.setor==='Coloração');
+
   let html=`<div class="rpt-count">${rptFiltrados.length} registro(s) — ${montagens.length} montagem(ns) · ${coloracoes.length} coloração(ões)</div>`;
+
   if(montagens.length){
     html+=`<div class="rpt-section-title mont">🔧 Montagem — ${montagens.length} registro(s)</div>`;
-    html+=montagens.map(r=>`<div class="rpt-item rpt-mont"><div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${iniciais[r.operador]||'??'}</div><span class="rpt-ped">${r.pedido}</span><span class="rpt-nome">${r.operador}</span><span class="rpt-dt">${fmtDt(r.ts)} às ${fmtHr(r.ts)}</span></div>`).join('');
+    html+=montagens.map(r=>{
+      const isDup=dupKeys.has(dupKey(r));
+      return`<div class="rpt-item rpt-mont${isDup?' is-dup':''}">
+        <div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${iniciais[r.operador]||'??'}</div>
+        <span class="rpt-ped">${r.pedido}${isDup?'<span class="dup-tag">DUP</span>':''}</span>
+        <span class="rpt-nome">${r.operador}</span>
+        <span class="rpt-dt">${fmtDt(r.ts)} às ${fmtHr(r.ts)}</span>
+      </div>`;
+    }).join('');
   }
   if(coloracoes.length){
     html+=`<div class="rpt-section-title cor">🎨 Coloração — ${coloracoes.length} registro(s)</div>`;
-    html+=coloracoes.map(r=>`<div class="rpt-item rpt-cor"><div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${iniciais[r.operador]||'??'}</div><span class="rpt-ped">${r.pedido}</span><span class="rpt-nome">${r.operador}</span><span class="rpt-dt">${fmtDt(r.ts)} às ${fmtHr(r.ts)}</span></div>`).join('');
+    html+=coloracoes.map(r=>{
+      const isDup=dupKeys.has(dupKey(r));
+      return`<div class="rpt-item rpt-cor${isDup?' is-dup':''}">
+        <div style="width:40px;height:40px;min-width:40px;border-radius:50%;background:${bgCores[r.operador]||'#eee'};color:${cores[r.operador]||'#333'};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">${iniciais[r.operador]||'??'}</div>
+        <span class="rpt-ped">${r.pedido}${isDup?'<span class="dup-tag">DUP</span>':''}</span>
+        <span class="rpt-nome">${r.operador}</span>
+        <span class="rpt-dt">${fmtDt(r.ts)} às ${fmtHr(r.ts)}</span>
+      </div>`;
+    }).join('');
+  }
+
+  // Bloco de resumo de duplicidades
+  if(grupos.length===0){
+    html+=`<div class="rpt-ok-box"><span style="font-size:20px">✅</span><span>Nenhuma duplicidade encontrada neste período.</span></div>`;
+  }else{
+    const opsComDup=OPS_MONT.filter(n=>dupPorOp[n]>0);
+    const colsQtd=Math.min(opsComDup.length,3);
+    html+=`<div class="rpt-dup-resumo">
+      <div class="rpt-dup-resumo-header">
+        <div class="rpt-dup-resumo-title"><span style="font-size:18px">⚠️</span> Resumo de duplicidades do período</div>
+        <div class="rpt-dup-resumo-sub">Pedidos registrados mais de uma vez pelo mesmo operador no mesmo setor</div>
+      </div>
+      <div class="rpt-dup-body">
+        <div class="rpt-dup-stats" style="grid-template-columns:repeat(${colsQtd},minmax(0,1fr))">
+          ${opsComDup.map(n=>`<div class="rpt-dup-stat">
+            <div class="rpt-dup-stat-n">${dupPorOp[n]||0}</div>
+            <div class="rpt-dup-stat-op">${n}</div>
+            <div class="rpt-dup-stat-l">registro(s) duplicado(s)</div>
+          </div>`).join('')}
+        </div>
+        <div class="rpt-dup-list-title">Lista de pedidos com duplicidade</div>
+        ${grupos.map(g=>{
+          const isCor=g.setor==='Coloração';
+          const setorBadge=isCor
+            ?`<span style="font-size:11px;font-weight:700;background:#F5EDFB;color:#6B26A3;padding:2px 7px;border-radius:99px">🎨 Coloração</span>`
+            :`<span style="font-size:11px;font-weight:700;background:#E6F1FB;color:#185FA5;padding:2px 7px;border-radius:99px">🔧 Montagem</span>`;
+          return`<div class="rpt-dup-row">
+            <div style="width:32px;height:32px;min-width:32px;border-radius:50%;background:${bgCores[g.operador]||'#eee'};color:${cores[g.operador]||'#333'};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">${iniciais[g.operador]||'??'}</div>
+            <span class="rpt-dup-row-ped">${g.pedido}</span>
+            ${setorBadge}
+            <span class="rpt-dup-row-op">${g.operador}</span>
+            <span class="rpt-dup-row-qtd">${g.itens.length}x registrado</span>
+            <span class="rpt-dup-row-dts">${g.itens.map((it,i)=>`#${i+1}: ${fmtDt(it.ts)} às ${fmtHr(it.ts)}`).join(' &nbsp;|&nbsp; ')}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
   }
   res.innerHTML=html;
 }
+
 function gerarPdf(){
   const{jsPDF}=window.jspdf;const doc=new jsPDF();
   const ini=document.getElementById('dtIni').value,fim=document.getElementById('dtFim').value;
   const fop=document.getElementById('filtOp').value||'Todos',fsetor=document.getElementById('filtSetor').value||'Todos';
   const montagens=rptFiltrados.filter(r=>(r.setor||'Montagem')==='Montagem');
   const coloracoes=rptFiltrados.filter(r=>r.setor==='Coloração');
+  const{dupKeys,grupos}=calcularDups(rptFiltrados);
+
   doc.setFont('helvetica','bold');doc.setFontSize(14);doc.text('Relatório de Serviços — Montagem & Coloração',14,18);
   doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(120);
   doc.text(`Período: ${fmtDt(ini+'T00:00:00')} a ${fmtDt(fim+'T00:00:00')}   |   Operador: ${fop}   |   Setor: ${fsetor}`,14,25);
@@ -663,21 +918,50 @@ function gerarPdf(){
   doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`,14,35);
   doc.setDrawColor(200);doc.line(14,38,196,38);
   let curY=42;
+
   if(montagens.length){
     doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(24,95,165);doc.text('Montagem',14,curY);curY+=5;
-    doc.autoTable({startY:curY,head:[['#','Pedido','Operador','Data','Hora']],body:montagens.map((r,i)=>[i+1,r.pedido,r.operador,fmtDt(r.ts),fmtHr(r.ts)]),styles:{font:'helvetica',fontSize:9,cellPadding:3},headStyles:{fillColor:[24,95,165],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[230,241,251]},columnStyles:{0:{cellWidth:10,halign:'center'},1:{cellWidth:45},2:{cellWidth:35},3:{cellWidth:30},4:{cellWidth:25}},margin:{left:14,right:14}});
+    doc.autoTable({startY:curY,head:[['#','Pedido','Operador','Data','Hora','Status']],
+      body:montagens.map((r,i)=>{const isDup=dupKeys.has(dupKey(r));return[i+1,r.pedido,r.operador,fmtDt(r.ts),fmtHr(r.ts),isDup?'DUPLICADO':'OK'];}),
+      styles:{font:'helvetica',fontSize:9,cellPadding:3},headStyles:{fillColor:[24,95,165],textColor:255,fontStyle:'bold'},
+      alternateRowStyles:{fillColor:[230,241,251]},
+      columnStyles:{0:{cellWidth:10,halign:'center'},1:{cellWidth:40},2:{cellWidth:32},3:{cellWidth:26},4:{cellWidth:22},5:{cellWidth:24,halign:'center'}},
+      didParseCell:function(data){if(data.column.index===5&&data.cell.raw==='DUPLICADO'){data.cell.styles.textColor=[162,45,45];data.cell.styles.fontStyle='bold';data.cell.styles.fillColor=[252,235,235];}},
+      margin:{left:14,right:14}});
     curY=doc.lastAutoTable.finalY+10;
   }
   if(coloracoes.length){
     if(curY>230){doc.addPage();curY=20;}
     doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(107,38,163);doc.text('Coloração',14,curY);curY+=5;
-    doc.autoTable({startY:curY,head:[['#','Pedido','Operador','Data','Hora']],body:coloracoes.map((r,i)=>[i+1,r.pedido,r.operador,fmtDt(r.ts),fmtHr(r.ts)]),styles:{font:'helvetica',fontSize:9,cellPadding:3},headStyles:{fillColor:[107,38,163],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[245,237,251]},columnStyles:{0:{cellWidth:10,halign:'center'},1:{cellWidth:45},2:{cellWidth:35},3:{cellWidth:30},4:{cellWidth:25}},margin:{left:14,right:14}});
+    doc.autoTable({startY:curY,head:[['#','Pedido','Operador','Data','Hora','Status']],
+      body:coloracoes.map((r,i)=>{const isDup=dupKeys.has(dupKey(r));return[i+1,r.pedido,r.operador,fmtDt(r.ts),fmtHr(r.ts),isDup?'DUPLICADO':'OK'];}),
+      styles:{font:'helvetica',fontSize:9,cellPadding:3},headStyles:{fillColor:[107,38,163],textColor:255,fontStyle:'bold'},
+      alternateRowStyles:{fillColor:[245,237,251]},
+      columnStyles:{0:{cellWidth:10,halign:'center'},1:{cellWidth:40},2:{cellWidth:32},3:{cellWidth:26},4:{cellWidth:22},5:{cellWidth:24,halign:'center'}},
+      didParseCell:function(data){if(data.column.index===5&&data.cell.raw==='DUPLICADO'){data.cell.styles.textColor=[162,45,45];data.cell.styles.fontStyle='bold';data.cell.styles.fillColor=[252,235,235];}},
+      margin:{left:14,right:14}});
     curY=doc.lastAutoTable.finalY+10;
   }
   if(curY>240){doc.addPage();curY=20;}
   const porOp={};rptFiltrados.forEach(r=>{if(!porOp[r.operador])porOp[r.operador]={mont:0,cor:0};if((r.setor||'Montagem')==='Montagem')porOp[r.operador].mont++;else porOp[r.operador].cor++;});
   doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(0);doc.text('Resumo por operador',14,curY);
-  doc.autoTable({startY:curY+4,head:[['Operador','Montagens','Colorações','Total']],body:Object.entries(porOp).map(([n,v])=>[n,v.mont,v.cor,v.mont+v.cor]),styles:{font:'helvetica',fontSize:9,cellPadding:3},headStyles:{fillColor:[55,138,221],textColor:255,fontStyle:'bold'},columnStyles:{0:{cellWidth:55},1:{cellWidth:30,halign:'center'},2:{cellWidth:30,halign:'center'},3:{cellWidth:25,halign:'center'}},margin:{left:14,right:14}});
+  doc.autoTable({startY:curY+4,head:[['Operador','Montagens','Colorações','Total']],
+    body:Object.entries(porOp).map(([n,v])=>[n,v.mont,v.cor,v.mont+v.cor]),
+    styles:{font:'helvetica',fontSize:9,cellPadding:3},headStyles:{fillColor:[55,138,221],textColor:255,fontStyle:'bold'},
+    columnStyles:{0:{cellWidth:55},1:{cellWidth:30,halign:'center'},2:{cellWidth:30,halign:'center'},3:{cellWidth:25,halign:'center'}},
+    margin:{left:14,right:14}});
+
+  if(grupos.length>0){
+    curY=doc.lastAutoTable.finalY+10;
+    if(curY>230){doc.addPage();curY=20;}
+    doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(162,45,45);doc.text('Duplicidades detectadas',14,curY);
+    doc.autoTable({startY:curY+4,head:[['Pedido','Operador','Setor','Qtd','Datas']],
+      body:grupos.map(g=>[g.pedido,g.operador,g.setor,g.itens.length+'x registrado',g.itens.map((it,i)=>`#${i+1}: ${fmtDt(it.ts)} ${fmtHr(it.ts)}`).join(' | ')]),
+      styles:{font:'helvetica',fontSize:8,cellPadding:2.5},headStyles:{fillColor:[226,75,74],textColor:255,fontStyle:'bold'},
+      alternateRowStyles:{fillColor:[252,235,235]},
+      columnStyles:{0:{cellWidth:32},1:{cellWidth:28},2:{cellWidth:22},3:{cellWidth:22,halign:'center'},4:{cellWidth:70}},
+      margin:{left:14,right:14}});
+  }
   doc.save(`servicos_${ini}_${fim}.pdf`);
 }
 
@@ -790,7 +1074,6 @@ async function adicionarItem(){
   }catch(e){flashEst(`Erro ao salvar: ${e.message}`,'err','❌');}
 }
 
-// Modal saída
 function abrirModalSaida(itemId){
   const item=itenEstoque.find(i=>i.fireId===itemId);if(!item)return;
   modalItemId=itemId;modalItemData=item;modalOpSel=null;modalQtdSaida=1;
@@ -825,7 +1108,6 @@ async function confirmarSaida(){
   }catch(e){alert('Erro ao registrar saída. Verifique a conexão.');btn.disabled=false;}
 }
 
-// Modal edição
 function abrirModalEdit(itemId){
   const item=itenEstoque.find(i=>i.fireId===itemId);if(!item)return;
   editItemId=itemId;
@@ -859,7 +1141,6 @@ async function excluirItem(){
   fecharModalEdit();carregarEstoque();
 }
 
-// Movimentações
 function renderMovimentacoes(){
   const btns=['todos','entrada','saida'];
   btns.forEach(t=>{
@@ -915,7 +1196,6 @@ function gerarPdfEstoque(){
   doc.save(`estoque_montagem_${hoje}.pdf`);
 }
 
-// Fechar modais clicando fora
 document.getElementById('modalSaida').addEventListener('click',function(e){if(e.target===this)fecharModal();});
 document.getElementById('modalEdit').addEventListener('click',function(e){if(e.target===this)fecharModalEdit();});
 </script>
